@@ -1,0 +1,50 @@
+
+const express=require('express')
+const cors=require('cors')
+
+const app=express()
+
+const corsOptions={
+    origin:"http://localhost:3000"
+}
+
+app.use(cors(corsOptions))
+
+app.use(express.json())
+
+const db=require('./app/models')
+
+
+db.mongoose.connect(db.url)
+  .then(()=>{
+    console.log("Connected To Mongo Server!!!")
+  })
+
+require('./app/routes/user.routes')(app)  
+
+// app.get("/first",(req,res)=>{
+//     res.send("Hello From Express Server!!!")
+// })
+
+// const person={
+//     name:"Abc",
+//     city:"Pune"
+// }
+
+// app.get("/second",(req,res)=>{
+//     res.send(person)
+// })
+// const userList=[]
+// app.post("/saveData",(req,res)=>{
+//     console.log(req.body)
+//     userList.push(req.body)
+//     console.log(userList)
+//     res.send({"statusCode":201,"message":"Data Saved!!!","result":userList})
+// })
+// app.get("/getUserList",(req,res)=>{
+//     res.send(userList)
+// })
+
+app.listen(7878,()=>{
+    console.log('Server started on port 7878!!!')
+})
